@@ -45,8 +45,8 @@ class ReminderJob:
     """Stateful coordinator for periodic reminder scans."""
 
     settings: Settings
-    sender: "MetaSender"
-    session_factory: "async_sessionmaker[AsyncSession]"
+    sender: MetaSender
+    session_factory: async_sessionmaker[AsyncSession]
 
     async def run_once(self, *, now: datetime | None = None) -> int:
         n = now or datetime.now(UTC)
@@ -106,8 +106,8 @@ class ReminderJob:
 
 async def scan_and_send(
     settings: Settings,
-    sender: "MetaSender",
-    session_factory: "async_sessionmaker[AsyncSession]",
+    sender: MetaSender,
+    session_factory: async_sessionmaker[AsyncSession],
     *,
     now: datetime | None = None,
 ) -> int:
