@@ -58,6 +58,9 @@ class Settings(BaseSettings):
     business_timezone: str = Field(default="America/Mexico_City")
     appointment_duration_minutes: int = Field(default=30, ge=5, le=480)
 
+    reminder_scan_interval_seconds: int = Field(default=300, ge=30, le=3600)
+    reminder_window_minutes: int = Field(default=5, ge=1, le=30)
+
     @property
     def business_info(self) -> "BusinessInfo":
         return BusinessInfo.model_validate_json(self.business_info_json)
