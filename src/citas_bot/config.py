@@ -50,7 +50,10 @@ class Settings(BaseSettings):
     database_echo: bool = Field(default=False)
 
     business_info_json: str = Field(
-        default='{"name":"Demo Business","hours":"Lun-Vie 9-18","address":"Por confirmar","phone":"","description":""}'
+        default=(
+            '{"name":"Demo Business","hours":"Lun-Vie 9-18",'
+            '"address":"Por confirmar","phone":"","description":""}'
+        )
     )
     business_timezone: str = Field(default="America/Mexico_City")
     appointment_duration_minutes: int = Field(default=30, ge=5, le=480)
