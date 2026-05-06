@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from citas_bot.intents.base import Intent, IntentContext, IntentResult, Reply
 
-
 _DEFAULT_TEXT = (
     "Disculpa, aun no entiendo eso. "
     "Puedes preguntarme sobre: horarios, ubicacion, o agendar una cita."
