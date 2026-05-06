@@ -1,0 +1,16 @@
+{
+  "name": "book_then_cancel",
+  "description": "Customer books an appointment then cancels it",
+  "turns": [
+    {"in": "agendar cita", "expect": "dia"},
+    {"in": "12 de septiembre", "expect": "hora"},
+    {"in": "11:00", "expect": "nombre"},
+    {"in": "Maria", "expect": "correcto"},
+    {"in": "si", "expect": "listo"},
+    {"in": "cancelar mi cita", "expect": "1."},
+    {"in": "1", "expect": "confirmas"},
+    {"in": "si", "expect": "cancele"}
+  ],
+  "expected_appointments": 1,
+  "expected_cancelled": 1
+}

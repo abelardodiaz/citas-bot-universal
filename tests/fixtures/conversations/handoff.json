@@ -1,0 +1,8 @@
+{
+  "name": "handoff",
+  "description": "Customer asks for a human and the conversation flag is set",
+  "turns": [
+    {"in": "quiero hablar con un humano", "expect": "equipo"}
+  ],
+  "expected_handoff": true
+}

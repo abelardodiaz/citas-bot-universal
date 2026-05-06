@@ -1,0 +1,7 @@
+{
+  "name": "info_keyword",
+  "description": "Customer asks for opening hours and gets a reply via the info handler",
+  "turns": [
+    {"in": "cual es el horario", "expect": ""}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "book_happy_path",
+  "description": "Customer books an appointment for next month at 10am",
+  "turns": [
+    {"in": "quiero agendar", "expect": "dia"},
+    {"in": "10 de septiembre", "expect": "hora"},
+    {"in": "10:00", "expect": "nombre"},
+    {"in": "Carlos Ruiz", "expect": "correcto"},
+    {"in": "si", "expect": "listo"}
+  ],
+  "expected_appointments": 1
+}
