@@ -15,7 +15,7 @@ format:
 	uv run ruff check --fix src tests
 
 run:
-	@echo "M02 will implement: uv run uvicorn citas_bot.main:app --reload"
+	uv run uvicorn citas_bot.main:app --reload --host 0.0.0.0 --port 8000
 
 clean:
 	rm -rf .ruff_cache .mypy_cache .pytest_cache .coverage htmlcov dist build *.egg-info
