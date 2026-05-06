@@ -1,6 +1,6 @@
 [project]
 name = "citas-bot-universal"
-version = "0.0.7"
+version = "0.0.8"
 description = "Template Python para asistentes WhatsApp de citas. Fork, personaliza, deploya."
 readme = "README.md"
 license = { text = "MIT" }
@@ -38,6 +38,7 @@ dev = [
   "pytest-cov>=5.0.0",
   "pytest-asyncio>=0.23.0",
   "httpx>=0.27.0",
+  "freezegun>=1.5.0",
 ]
 
 [project.urls]
@@ -86,6 +87,10 @@ disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
 module = ["dateparser", "dateparser.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["apscheduler", "apscheduler.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

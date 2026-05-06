@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from enum import StrEnum
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from citas_bot.domain.base import Base, IdMixin, TimestampMixin
@@ -44,3 +44,5 @@ class Appointment(IdMixin, TimestampMixin, Base):
         String(20), default=AppointmentStatus.SCHEDULED, nullable=False
     )
     notes: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    reminder_24h_sent: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    reminder_2h_sent: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
