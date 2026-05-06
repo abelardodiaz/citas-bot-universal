@@ -2,8 +2,18 @@
 
 from typing import Literal
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class BusinessInfo(BaseModel):
+    """Public-facing information about the business that runs the bot."""
+
+    name: str = "Demo Business"
+    hours: str = "Lunes a Viernes 9am-6pm"
+    address: str = "Por confirmar"
+    phone: str = ""
+    description: str = ""
 
 
 class Settings(BaseSettings):
@@ -39,9 +49,15 @@ class Settings(BaseSettings):
     database_url: str = Field(default="sqlite+aiosqlite:///./citas_bot.db")
     database_echo: bool = Field(default=False)
 
-    business_name: str = Field(default="Demo Business")
+    business_info_json: str = Field(
+        default='{"name":"Demo Business","hours":"Lun-Vie 9-18","address":"Por confirmar","phone":"","description":""}'
+    )
     business_timezone: str = Field(default="America/Mexico_City")
     appointment_duration_minutes: int = Field(default=30, ge=5, le=480)
+
+    @property
+    def business_info(self) -> "BusinessInfo":
+        return BusinessInfo.model_validate_json(self.business_info_json)
 
 
 def get_settings() -> Settings:

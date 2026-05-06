@@ -1,6 +1,6 @@
 [project]
 name = "citas-bot-universal"
-version = "0.0.4"
+version = "0.0.5"
 description = "Template Python para asistentes WhatsApp de citas. Fork, personaliza, deploya."
 readme = "README.md"
 license = { text = "MIT" }
