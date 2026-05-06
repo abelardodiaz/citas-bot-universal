@@ -51,7 +51,10 @@ CANCEL_DONE_TPL = "Listo, cancele tu cita del {when}."
 
 # Reschedule
 RESCHEDULE_NO_APPOINTMENTS = "No tienes citas activas para reprogramar."
-RESCHEDULE_PICK_TPL = "Cuales citas tienes activas:\n{listing}\nResponde con el numero a reprogramar."
+RESCHEDULE_PICK_TPL = (
+    "Cuales citas tienes activas:\n{listing}\n"
+    "Responde con el numero a reprogramar."
+)
 RESCHEDULE_ASK_DATE = "Para que dia la quieres mover?"
 RESCHEDULE_DONE_TPL = "Listo, tu cita ahora es el {when}."
 

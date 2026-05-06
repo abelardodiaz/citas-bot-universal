@@ -109,7 +109,9 @@ async def test_handoff_marks_conversation(
     setup: tuple[Customer, Conversation, ConversationRepository, IntentRouter, AsyncSession],
 ) -> None:
     customer, conversation, convs, router, session = setup
-    reply = await router.route(customer, conversation, "quiero hablar con un humano", session=session)
+    reply = await router.route(
+        customer, conversation, "quiero hablar con un humano", session=session
+    )
     assert reply is not None
     assert "equipo" in reply.text.lower() or "alguien" in reply.text.lower()
     refreshed = await convs.get_active(customer.id)
