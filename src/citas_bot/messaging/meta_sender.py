@@ -7,6 +7,9 @@ without raising — the webhook handler should always return 200 to Meta.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+from typing import Any
+
 import httpx
 from tenacity import (
     AsyncRetrying,
@@ -66,7 +69,9 @@ class MetaSender:
         except Exception as exc:
             log.error("meta_send_failed", to=to, error=str(exc))
 
-    async def _post_with_retry(self, headers: dict[str, str], body: dict[str, object]) -> None:
+    async def _post_with_retry(
+        self, headers: Mapping[str, str], body: Mapping[str, Any]
+    ) -> None:
         retryer = AsyncRetrying(
             stop=stop_after_attempt(self._max_retries),
             wait=wait_exponential(multiplier=1, min=1, max=8),

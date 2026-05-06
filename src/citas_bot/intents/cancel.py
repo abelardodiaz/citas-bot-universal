@@ -121,9 +121,10 @@ async def handle_cancel(ctx: IntentContext) -> IntentResult:
         return IntentResult(reply=Reply(text=intl.BOOK_RETRY_EXHAUSTED), clear_state=True)
 
     repo = AppointmentRepository(ctx.session)
-    appt = await repo.update_status(slots["picked_id"], AppointmentStatus.CANCELLED)
-    if appt is None:
+    updated = await repo.update_status(slots["picked_id"], AppointmentStatus.CANCELLED)
+    if updated is None:
         return IntentResult(reply=Reply(text=intl.CANCEL_NO_APPOINTMENTS), clear_state=True)
+    appt = updated
     return IntentResult(
         reply=Reply(
             text=intl.CANCEL_DONE_TPL.format(when=_format_when(appt.scheduled_at, tz))
