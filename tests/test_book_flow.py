@@ -89,7 +89,7 @@ async def test_happy_path_book_appointment(
     # Turn 2: provide date
     conversation = await convs.get_active(customer.id)  # type: ignore[assignment]
     assert conversation is not None
-    reply = await router.route(customer, conversation, "manana", session=session)
+    reply = await router.route(customer, conversation, "15 de junio", session=session)
     assert reply is not None
     assert "hora" in reply.text.lower()
 
@@ -147,7 +147,7 @@ async def test_invalid_time_retries_then_exhausts(
     await router.route(customer, conversation, "agendar", session=session)
     conversation = await convs.get_active(customer.id)  # type: ignore[assignment]
     assert conversation is not None
-    await router.route(customer, conversation, "manana", session=session)
+    await router.route(customer, conversation, "15 de junio", session=session)
 
     # Three invalid times -> exhausted
     for _ in range(3):
@@ -171,7 +171,7 @@ async def test_confirm_no_does_not_persist(
     await router.route(customer, conversation, "agendar", session=session)
     conversation = await convs.get_active(customer.id)  # type: ignore[assignment]
     assert conversation is not None
-    await router.route(customer, conversation, "manana", session=session)
+    await router.route(customer, conversation, "15 de junio", session=session)
     conversation = await convs.get_active(customer.id)  # type: ignore[assignment]
     assert conversation is not None
     await router.route(customer, conversation, "11:00", session=session)
