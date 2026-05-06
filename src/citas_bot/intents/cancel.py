@@ -102,7 +102,9 @@ async def handle_cancel(ctx: IntentContext) -> IntentResult:
         return IntentResult(reply=Reply(text=intl.BOOK_CANCEL), clear_state=True)
     if not _starts_with_any(ctx.text, intl.KEYWORD_YES):
         # Re-ask
-        picked = next((a for a in active if a.id == slots["picked_id"]), None)
+        picked: Appointment | None = next(
+            (a for a in active if a.id == slots["picked_id"]), None
+        )
         if picked is None:
             return IntentResult(
                 reply=Reply(text=intl.CANCEL_NO_APPOINTMENTS), clear_state=True
