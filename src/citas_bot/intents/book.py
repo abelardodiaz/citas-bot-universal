@@ -142,6 +142,15 @@ async def handle_book(ctx: IntentContext) -> IntentResult:
 
 
 def _step_date(text: str, slots: dict[str, Any], tz: str) -> IntentResult:
+    # First turn into the flow: the user's trigger message ("agendar",
+    # "quiero cita") is not a date attempt. Just ask for the date.
+    is_first_turn = not slots
+    if is_first_turn and any(kw in text.lower() for kw in intl.KEYWORD_BOOK):
+        slots[RETRY_KEY] = 0
+        return IntentResult(
+            reply=Reply(text=intl.BOOK_ASK_DATE), new_intent="book", new_slots=slots
+        )
+
     parsed = _parse_date(text, tz)
     if parsed is None:
         return _retry_or(intl.BOOK_INVALID_DATE, slots)
