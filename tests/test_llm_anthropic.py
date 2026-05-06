@@ -8,7 +8,7 @@ from unittest.mock import AsyncMock, MagicMock
 import anthropic
 import pytest
 
-from citas_bot.llm import LLMAuthError, LLMRateLimitError, LLMTimeoutError, Message
+from citas_bot.llm import LLMAuthError, LLMTimeoutError, Message
 from citas_bot.llm.anthropic import AnthropicProvider, _split_system
 
 
