@@ -69,14 +69,19 @@ class ReminderJob:
                 if customer is None:
                     continue
 
-                local = appt.scheduled_at.astimezone(
+                # SQLite returns naive datetimes; treat them as UTC.
+                aware_at = appt.scheduled_at
+                if aware_at.tzinfo is None:
+                    aware_at = aware_at.replace(tzinfo=UTC)
+
+                local = aware_at.astimezone(
                     ZoneInfo(self.settings.business_timezone)
                 )
                 hora = local.strftime("%H:%M")
                 business_name = self.settings.business_info.name
 
                 if not appt.reminder_24h_sent and (
-                    target_24h - window <= appt.scheduled_at <= target_24h + window
+                    target_24h - window <= aware_at <= target_24h + window
                 ):
                     name_part = f", {customer.name}" if customer.name else ""
                     text = REMINDER_24H_TPL.format(
@@ -89,7 +94,7 @@ class ReminderJob:
                     sent += 1
 
                 if not appt.reminder_2h_sent and (
-                    target_2h - window <= appt.scheduled_at <= target_2h + window
+                    target_2h - window <= aware_at <= target_2h + window
                 ):
                     text = REMINDER_2H_TPL.format(
                         business_name=business_name, hora=hora
