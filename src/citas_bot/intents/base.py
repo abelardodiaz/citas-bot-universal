@@ -7,6 +7,8 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Literal
 
 if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncSession
+
     from citas_bot.config import BusinessInfo
     from citas_bot.domain import Conversation, Customer
     from citas_bot.llm import LLMProvider
@@ -48,13 +50,18 @@ class Classification:
 
 @dataclass(frozen=True, slots=True)
 class IntentContext:
-    """Read-only context handed to handlers."""
+    """Read-only context handed to handlers.
+
+    Includes an AsyncSession so handlers can use repositories. Tests can pass
+    ``None`` when the handler under test does not touch the database.
+    """
 
     customer: Customer
     conversation: Conversation
     text: str
     business_info: BusinessInfo
     llm: LLMProvider
+    session: AsyncSession | None = None
 
 
 IntentHandler = Callable[[IntentContext], Awaitable[IntentResult]]

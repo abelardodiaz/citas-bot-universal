@@ -14,6 +14,8 @@ from citas_bot.llm import LLMError, Message
 from citas_bot.observability import get_logger
 
 if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncSession
+
     from citas_bot.config import BusinessInfo
     from citas_bot.data.repositories import ConversationRepository
     from citas_bot.domain import Conversation, Customer
@@ -67,6 +69,7 @@ class IntentRouter:
         conversation: Conversation,
         text: str,
         message_id: str | None = None,
+        session: AsyncSession | None = None,
     ) -> Reply | None:
         """Process one inbound text message; returns the Reply or None if dedupe hit."""
 
@@ -74,7 +77,7 @@ class IntentRouter:
             log.info("dedupe_skip", message_id=message_id)
             return None
 
-        classification = await self._classify(text)
+        classification = await self._classify_or_continue(text, conversation)
         intent = self._registry.by_name(classification.intent_name)
         if intent is None or classification.confidence < self._threshold:
             log.info(
@@ -90,6 +93,7 @@ class IntentRouter:
             text=text,
             business_info=self._business_info,
             llm=self._llm,
+            session=session,
         )
         result: IntentResult = await intent.handler(ctx)
 
@@ -105,6 +109,19 @@ class IntentRouter:
             reply_type=result.reply.type,
         )
         return result.reply
+
+    async def _classify_or_continue(
+        self, text: str, conversation: Conversation
+    ) -> Classification:
+        # If we are mid-flow on an intent that owns the conversation
+        # (current_intent set and slots accumulating), keep it.
+        if conversation.current_intent and conversation.slots_filled:
+            return Classification(
+                intent_name=conversation.current_intent,
+                confidence=1.0,
+                reasoning="continue_flow",
+            )
+        return await self._classify(text)
 
     async def _classify(self, text: str) -> Classification:
         # 1. keyword match

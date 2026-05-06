@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from citas_bot.intents.base import Intent
+from citas_bot.intents.book import BOOK
 from citas_bot.intents.default import DEFAULT
 from citas_bot.intents.info import INFO
 
@@ -31,6 +32,6 @@ class IntentRegistry:
 
 
 def build_default_registry() -> IntentRegistry:
-    """The shipped registry: info + default."""
+    """The shipped registry: book + info + default."""
 
-    return IntentRegistry([INFO, DEFAULT])
+    return IntentRegistry([BOOK, INFO, DEFAULT])
