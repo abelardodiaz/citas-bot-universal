@@ -59,7 +59,7 @@ def _starts_with_any(text: str, keywords: tuple[str, ...]) -> bool:
 
 
 def _parse_date(text: str, business_tz: str) -> datetime | None:
-    return dateparser.parse(
+    parsed: datetime | None = dateparser.parse(
         text,
         languages=["es"],
         settings={
@@ -68,6 +68,7 @@ def _parse_date(text: str, business_tz: str) -> datetime | None:
             "PREFER_DATES_FROM": "future",
         },
     )
+    return parsed
 
 
 def _parse_time_on_date(text: str, base_iso: str, business_tz: str) -> datetime | None:
