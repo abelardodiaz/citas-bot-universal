@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 import anthropic
 from tenacity import (
     AsyncRetrying,
@@ -63,13 +65,16 @@ class AnthropicProvider:
         temperature: float,
     ) -> ChatResponse:
         system, payload = _split_system(messages)
+        sdk_messages: list[anthropic.types.MessageParam] = [
+            {"role": _ensure_role(m.role), "content": m.content} for m in payload
+        ]
         try:
             response = await self._client.messages.create(
                 model=self._model,
                 max_tokens=max_tokens or 1024,
                 temperature=temperature,
                 system=system,
-                messages=[{"role": m.role, "content": m.content} for m in payload],
+                messages=sdk_messages,
             )
         except anthropic.AuthenticationError as exc:
             raise LLMAuthError(str(exc)) from exc
@@ -108,3 +113,11 @@ def _split_system(messages: list[Message]) -> tuple[str, list[Message]]:
     system_parts = [m.content for m in messages if m.role == "system"]
     rest = [m for m in messages if m.role != "system"]
     return "\n\n".join(system_parts), rest
+
+
+def _ensure_role(role: str) -> Literal["user", "assistant"]:
+    """Narrow our Message.role to what the Anthropic SDK accepts in messages."""
+
+    if role in ("user", "assistant"):
+        return role  # type: ignore[return-value]
+    raise ValueError(f"Unexpected message role after _split_system: {role!r}")
