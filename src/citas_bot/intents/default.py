@@ -2,12 +2,7 @@
 
 from __future__ import annotations
 
-from citas_bot.intents.base import (
-    Intent,
-    IntentContext,
-    IntentResult,
-    Reply,
-)
+from citas_bot.intents.base import Intent, IntentContext, IntentResult, Reply
 
 
 _DEFAULT_TEXT = (
