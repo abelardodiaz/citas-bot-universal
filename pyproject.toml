@@ -1,6 +1,6 @@
 [project]
 name = "citas-bot-universal"
-version = "0.0.3"
+version = "0.0.4"
 description = "Template Python para asistentes WhatsApp de citas. Fork, personaliza, deploya."
 readme = "README.md"
 license = { text = "MIT" }
@@ -23,6 +23,9 @@ dependencies = [
   "structlog>=24.1.0",
   "anthropic>=0.40.0",
   "tenacity>=8.5.0",
+  "sqlalchemy[asyncio]>=2.0.30",
+  "aiosqlite>=0.20.0",
+  "alembic>=1.13.0",
 ]
 
 [project.optional-dependencies]
@@ -73,7 +76,7 @@ python_version = "3.11"
 strict = true
 warn_unused_ignores = true
 warn_redundant_casts = true
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"

@@ -36,6 +36,9 @@ class Settings(BaseSettings):
     llm_timeout_seconds: float = Field(default=30.0, gt=0)
     llm_max_tokens: int = Field(default=1024, ge=1, le=8192)
 
+    database_url: str = Field(default="sqlite+aiosqlite:///./citas_bot.db")
+    database_echo: bool = Field(default=False)
+
     business_name: str = Field(default="Demo Business")
     business_timezone: str = Field(default="America/Mexico_City")
     appointment_duration_minutes: int = Field(default=30, ge=5, le=480)
