@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import JSON, DateTime, ForeignKey, String
+from sqlalchemy import JSON, Boolean, DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from citas_bot.domain.base import Base, IdMixin, TimestampMixin, utc_now
@@ -33,4 +33,7 @@ class Conversation(IdMixin, TimestampMixin, Base):
     )
     last_message_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utc_now, nullable=False
+    )
+    handoff_active: Mapped[bool] = mapped_column(
+        Boolean, default=False, nullable=False
     )

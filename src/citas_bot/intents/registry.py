@@ -4,8 +4,12 @@ from __future__ import annotations
 
 from citas_bot.intents.base import Intent
 from citas_bot.intents.book import BOOK
+from citas_bot.intents.cancel import CANCEL
 from citas_bot.intents.default import DEFAULT
+from citas_bot.intents.handoff import HANDOFF
 from citas_bot.intents.info import INFO
+from citas_bot.intents.list_mine import LIST_MINE
+from citas_bot.intents.reschedule import RESCHEDULE
 
 
 class IntentRegistry:
@@ -32,6 +36,8 @@ class IntentRegistry:
 
 
 def build_default_registry() -> IntentRegistry:
-    """The shipped registry: book + info + default."""
+    """The shipped registry: 6 intents + default fallback."""
 
-    return IntentRegistry([BOOK, INFO, DEFAULT])
+    return IntentRegistry(
+        [LIST_MINE, RESCHEDULE, CANCEL, BOOK, HANDOFF, INFO, DEFAULT]
+    )

@@ -37,3 +37,30 @@ KEYWORD_CANCEL = ("cancelar", "cancelo", "olvidalo", "olvídalo")
 KEYWORD_NO = ("no",)
 KEYWORD_YES = ("si", "sí", "claro", "confirmo")
 KEYWORD_BOOK = ("agendar", "cita", "reservar", "agenda")
+KEYWORD_CANCEL_INTENT = ("cancelar cita", "cancela mi", "cancelar mi")
+KEYWORD_RESCHEDULE = ("cambiar", "reagendar", "reprogramar", "mover")
+KEYWORD_LIST = ("mis citas", "que citas", "cuales citas", "ver citas", "tengo cita")
+KEYWORD_HANDOFF = ("humano", "persona", "asesor", "doctor", "encargado")
+
+# Cancel
+CANCEL_NO_APPOINTMENTS = "No tienes citas activas para cancelar."
+CANCEL_PICK_TPL = "Cuales citas tienes activas:\n{listing}\nResponde con el numero a cancelar."
+CANCEL_INVALID_PICK = "No entendi. Responde con el numero (ejemplo: 1)."
+CANCEL_CONFIRM_TPL = "?Confirmas cancelar la cita del {when}? Responde si o no."
+CANCEL_DONE_TPL = "Listo, cancele tu cita del {when}."
+
+# Reschedule
+RESCHEDULE_NO_APPOINTMENTS = "No tienes citas activas para reprogramar."
+RESCHEDULE_PICK_TPL = "Cuales citas tienes activas:\n{listing}\nResponde con el numero a reprogramar."
+RESCHEDULE_ASK_DATE = "Para que dia la quieres mover?"
+RESCHEDULE_DONE_TPL = "Listo, tu cita ahora es el {when}."
+
+# list_mine
+LIST_NONE = "No tienes citas activas."
+LIST_HEADER = "Tus citas:\n{listing}"
+
+# handoff
+HANDOFF_DONE = (
+    "Aviso al equipo. En unos momentos alguien te respondera. "
+    "Mientras tanto puedes seguir escribiendo aqui."
+)
