@@ -78,7 +78,7 @@ async def test_recorded_conversation(
     fixture_path: Path,
     session_setup: tuple[AsyncSession, Customer, Conversation, IntentRouter],
 ) -> None:
-    session, customer, conversation, router = session_setup
+    session, customer, _conversation, router = session_setup
     convs = ConversationRepository(session)
     appts = AppointmentRepository(session)
 

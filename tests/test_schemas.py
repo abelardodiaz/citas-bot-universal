@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from citas_bot.api.schemas import (
     AppointmentCreate,
@@ -20,7 +20,7 @@ def test_customer_create_minimum() -> None:
 
 
 def test_customer_read_round_trip() -> None:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     c = CustomerRead(
         id="abc",
         whatsapp_number="+5215551112233",
@@ -35,14 +35,14 @@ def test_customer_read_round_trip() -> None:
 def test_appointment_create_defaults() -> None:
     a = AppointmentCreate(
         customer_id="x" * 36,
-        scheduled_at=datetime.now(timezone.utc),
+        scheduled_at=datetime.now(UTC),
     )
     assert a.duration_minutes == 30
     assert a.notes is None
 
 
 def test_appointment_read_with_status() -> None:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     a = AppointmentRead(
         id="x",
         customer_id="y",
