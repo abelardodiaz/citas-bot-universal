@@ -29,6 +29,13 @@ class Settings(BaseSettings):
     meta_phone_number_id: str = Field(default="")
     meta_access_token: str = Field(default="")
 
+    llm_provider: Literal["anthropic", "deepseek"] = Field(default="anthropic")
+    anthropic_api_key: str = Field(default="")
+    anthropic_model: str = Field(default="claude-sonnet-4-6")
+    deepseek_api_key: str = Field(default="")
+    llm_timeout_seconds: float = Field(default=30.0, gt=0)
+    llm_max_tokens: int = Field(default=1024, ge=1, le=8192)
+
     business_name: str = Field(default="Demo Business")
     business_timezone: str = Field(default="America/Mexico_City")
     appointment_duration_minutes: int = Field(default=30, ge=5, le=480)
